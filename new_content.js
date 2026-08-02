@@ -653,7 +653,7 @@ function highlightNode(node) {
   
   // Show teaser and expand text
   gsap.to(node.userData.teaser, { fillOpacity: 1, outlineOpacity: 1, duration: 0.3 });
-  gsap.to(node.userData.text, { scaleX: 1.15, scaleY: 1.15, scaleZ: 1.15, duration: 0.3 });
+  gsap.to(node.userData.text.scale, { x: 1.15, y: 1.15, z: 1.15, duration: 0.3 });
   canvas.style.cursor = 'pointer';
 }
 function unhighlight() {
@@ -663,7 +663,7 @@ function unhighlight() {
   
   // Hide teaser and restore text
   gsap.to(highlightedNode.userData.teaser, { fillOpacity: 0, outlineOpacity: 0, duration: 0.3 });
-  gsap.to(highlightedNode.userData.text, { scaleX: 1.0, scaleY: 1.0, scaleZ: 1.0, duration: 0.3 });
+  gsap.to(highlightedNode.userData.text.scale, { x: 1.0, y: 1.0, z: 1.0, duration: 0.3 });
   highlightedNode = null;
   canvas.style.cursor = 'default';
 }
