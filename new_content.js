@@ -247,16 +247,16 @@ const PANELS = {
 
       <div class="section-label">Countries & Cities Visited</div>
       <div class="travel-grid">
-        <div class="travel-chip"><span class="tf">🇹🇭</span>Songkhla<span class="td">2013</span></div>
-        <div class="travel-chip"><span class="tf">🇲🇴</span>Macau<span class="td">2018</span></div>
-        <div class="travel-chip"><span class="tf">🇭🇰</span>Hong Kong<span class="td">2018</span></div>
-        <div class="travel-chip"><span class="tf">🇨🇳</span>Guangzhou<span class="td">2018</span></div>
-        <div class="travel-chip"><span class="tf">🇹🇼</span>Taoyuan<span class="td">2024</span></div>
-        <div class="travel-chip"><span class="tf">🇹🇭</span>Phuket<span class="td">2024</span></div>
-        <div class="travel-chip"><span class="tf">🇮🇩</span>Bali<span class="td">2025</span></div>
-        <div class="travel-chip"><span class="tf">🇯🇵</span>Osaka<span class="td">2025</span></div>
-        <div class="travel-chip"><span class="tf">🇲🇾</span>Kota Kinabalu<span class="td">2026</span></div>
         <div class="travel-chip"><span class="tf">🇨🇳</span>Shanghai<span class="td">2026</span></div>
+        <div class="travel-chip"><span class="tf">🇲🇾</span>Kota Kinabalu<span class="td">2026</span></div>
+        <div class="travel-chip"><span class="tf">🇯🇵</span>Osaka<span class="td">2025</span></div>
+        <div class="travel-chip"><span class="tf">🇮🇩</span>Bali<span class="td">2025</span></div>
+        <div class="travel-chip"><span class="tf">🇹🇭</span>Phuket<span class="td">2024</span></div>
+        <div class="travel-chip"><span class="tf">🇹🇼</span>Taoyuan<span class="td">2024</span></div>
+        <div class="travel-chip"><span class="tf">🇨🇳</span>Guangzhou<span class="td">2018</span></div>
+        <div class="travel-chip"><span class="tf">🇭🇰</span>Hong Kong<span class="td">2018</span></div>
+        <div class="travel-chip"><span class="tf">🇲🇴</span>Macau<span class="td">2018</span></div>
+        <div class="travel-chip"><span class="tf">🇹🇭</span>Songkhla<span class="td">2013</span></div>
       </div>`
   },
   skills: {
