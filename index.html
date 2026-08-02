@@ -1695,7 +1695,6 @@ for(let i = 0; i < 48; i++) {
   const pGeo = new THREE.SphereGeometry(0.04, 8, 8);
   const pMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
   const p = new THREE.Mesh(pGeo, pMat);
-  p.layers.enable(BLOOM_SCENE); 
   
   const splineData = splines[i % splines.length];
   p.material.color = splineData.color;
