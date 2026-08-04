@@ -56,6 +56,23 @@ const PANELS = {
       </div>
 
       <div class="tl-entry">
+        <div class="tl-avatar" style="background:linear-gradient(135deg,rgba(242,160,7,0.15),rgba(242,160,7,0.04));border-color:rgba(242,160,7,0.2);">🏠</div>
+        <div class="tl-body">
+          <div class="tl-when"><span class="status-dot" style="background:var(--text-dim);"></span> Mar 2026 — Jun 2026 · 4 mos</div>
+          <div class="tl-org">Vetro Property</div>
+          <div class="tl-role">Real Estate Agent · Part-time</div>
+          <div class="section-label" style="margin-top:14px;">Location</div>
+          <div class="chip-row"><span class="chip">WP. Kuala Lumpur, Malaysia</span></div>
+          <ul class="tl-bullets">
+            <li><strong>Outbound Sales & Lead Generation:</strong> Executed cold calling campaigns to drive client acquisition.</li>
+            <li><strong>Contract Management (SPA):</strong> Facilitated and managed Sales and Purchase Agreements.</li>
+            <li><strong>Lease Administration:</strong> Drafted and processed rental and tenancy agreements.</li>
+            <li><strong>Database Management:</strong> Maintained comprehensive client and property owner records using Excel.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-entry">
         <div class="tl-avatar" style="background:linear-gradient(135deg,rgba(23,184,166,0.15),rgba(23,184,166,0.04));border-color:rgba(23,184,166,0.2);">📈</div>
         <div class="tl-body">
           <div class="tl-when"><span class="status-dot" style="background:var(--cyan);"></span> Ongoing · extracurricular</div>
@@ -480,7 +497,7 @@ for (let i = 0; i < 3; i++) {
    5. ORBITING CATEGORY NODES & TROIKA TEXT
    ═══════════════════════════════════════════════════════════════ */
 const CLUSTERS = [
-  { key: 'experience', label: 'Experience', teaser: 'Tar UMT · Trading · Stella Maris', hex: '#FF6B5B' },
+  { key: 'experience', label: 'Experience', teaser: 'TAR UMT · Vetro Property · Trading', hex: '#FF6B5B' },
   { key: 'projects',   label: 'Projects',   teaser: '4 builds — SaaS, AI, databases', hex: '#17B8A6' },
   { key: 'hobbies',    label: 'Hobbies',    teaser: 'Mountaineering · Travel · Sports', hex: '#6FB33F' },
   { key: 'skills',     label: 'Skills',     teaser: 'Python · Next.js · PL/SQL · NetQ', hex: '#7C6FF0' },
