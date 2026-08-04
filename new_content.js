@@ -56,6 +56,34 @@ const PANELS = {
       </div>
 
       <div class="tl-entry">
+        <div class="tl-avatar" style="background:linear-gradient(135deg,rgba(124,111,240,0.15),rgba(124,111,240,0.04));border-color:rgba(124,111,240,0.2);">📚</div>
+        <div class="tl-body">
+          <div class="tl-when"><span class="status-dot" style="background:var(--text-dim);"></span> Jun 2023 — Jun 2024</div>
+          <div class="tl-org">TAR UMT, Malaysia</div>
+          <div class="tl-role">Foundation in Computing (Information Technology)</div>
+          <div class="stat-callout">
+            <span class="big">3.7134</span>
+            <span class="label">CGPA / 4.0</span>
+          </div>
+          <div class="section-label" style="margin-top:14px;">Coursework & Foundations</div>
+          <div class="chip-row">
+            <span class="chip">Computer Networks</span><span class="chip">ITE</span><span class="chip">Data Management</span>
+            <span class="chip">Web Dev</span><span class="chip">Emerging IT Trends</span><span class="chip">Operating Systems</span>
+            <span class="chip">Mobile App Dev</span>
+          </div>
+          <div class="section-label" style="margin-top:14px;">Programming & Tools</div>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">HTML</span><span class="chip">C++</span><span class="chip">Kotlin</span>
+            <span class="chip">VS Code</span><span class="chip">Android Studio</span><span class="chip">MS Access</span><span class="chip">ChatGPT</span>
+          </div>
+          <div class="section-label" style="margin-top:14px;">Extracurriculars</div>
+          <ul class="tl-bullets">
+            <li><strong>Badminton:</strong> Active member.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-entry">
         <div class="tl-avatar" style="background:linear-gradient(135deg,rgba(242,160,7,0.15),rgba(242,160,7,0.04));border-color:rgba(242,160,7,0.2);">🏠</div>
         <div class="tl-body">
           <div class="tl-when"><span class="status-dot" style="background:var(--text-dim);"></span> Mar 2026 — Jun 2026 · 4 mos</div>
