@@ -564,6 +564,7 @@ const CLUSTERS = [
 const nodes = [];
 const interactableObjects = [];
 const splines = [];
+const textLabels = []; // Text meshes stored separately from groups for clean billboarding
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -595,11 +596,12 @@ CLUSTERS.forEach((def, index) => {
   const aura = new THREE.Mesh(auraGeo, auraMat);
   group.add(aura);
   
-  // Discoverability: Large main text with outline — positioned above node
+  // Discoverability: Large main text — added to SCENE root (not group)
+  // so it never inherits parent rotation and always faces camera cleanly
   const textMesh = new Text();
   textMesh.text = def.label.toUpperCase();
   textMesh.fontSize = 0.3;
-  textMesh.position.set(0, 0.55, 0);
+  textMesh.position.set(x, y + 0.55, z);
   textMesh.color = def.hex;
   textMesh.anchorX = 'center';
   textMesh.anchorY = 'bottom';
@@ -607,14 +609,13 @@ CLUSTERS.forEach((def, index) => {
   textMesh.outlineColor = "#000000";
   textMesh.material = new THREE.MeshBasicMaterial({ color: new THREE.Color(def.hex) });
   textMesh.sync();
-  textMesh.userData = { textOffset: 0.55 };
-  group.add(textMesh);
+  scene.add(textMesh);
   
-  // Discoverability: Teaser text below main label, hidden by default
+  // Discoverability: Teaser text above main label, hidden by default
   const teaserMesh = new Text();
   teaserMesh.text = def.teaser;
   teaserMesh.fontSize = 0.12;
-  teaserMesh.position.set(0, 0.95, 0);
+  teaserMesh.position.set(x, y + 0.95, z);
   teaserMesh.color = "#eeeeee";
   teaserMesh.anchorX = 'center';
   teaserMesh.anchorY = 'bottom';
@@ -623,8 +624,10 @@ CLUSTERS.forEach((def, index) => {
   teaserMesh.fillOpacity = 0;
   teaserMesh.outlineOpacity = 0;
   teaserMesh.sync();
-  teaserMesh.userData = { textOffset: 0.95 };
-  group.add(teaserMesh);
+  scene.add(teaserMesh);
+  
+  // Track text-to-group association for per-frame positioning
+  textLabels.push({ textMesh, teaserMesh, group });
   
   nodeMesh.userData = { key: def.key, isNode: true, baseColor: baseColor, hoverColor: hoverColor, text: textMesh, teaser: teaserMesh };
 
@@ -651,9 +654,9 @@ CLUSTERS.forEach((def, index) => {
     group.position.set(startX, startY, startZ);
     gsap.to(group.position, {
       x: x, y: y, z: z,
-      duration: 2.5,
+      duration: 1.5,
       ease: "power3.out",
-      delay: index * 0.2
+      delay: index * 0.12
     });
   }
 });
@@ -805,27 +808,26 @@ canvas.addEventListener('touchend', e => {
 const clock = new THREE.Clock();
 
 // Reusable objects for per-frame text positioning (allocated once, reused every frame)
-const _camUp = new THREE.Vector3();
-const _groupWorldQuat = new THREE.Quaternion();
-const _invGroupQuat = new THREE.Quaternion();
-const _localUp = new THREE.Vector3();
+const _worldPos = new THREE.Vector3();
 
 function animate() {
   requestAnimationFrame(animate);
   const elapsed = clock.getElapsedTime();
 
-  // Idle Animation Logic
+  // Orbit rotation — always active so users immediately see it's interactive
   if (!activeNode && !prefersReducedMotion) {
     const idleTime = elapsed - lastInteractionTime;
-    if (idleTime > 20) {
-      const idleProgress = Math.min((idleTime - 20) / 10, 1.0); 
-      mainGroup.rotation.y += 0.002 * idleProgress;
+    // Gentle auto-rotation from the start (faster when idle longer)
+    const baseRotSpeed = 0.003;
+    const idleBoost = idleTime > 15 ? Math.min((idleTime - 15) / 10, 1.0) * 0.003 : 0;
+    mainGroup.rotation.y += baseRotSpeed + idleBoost;
+    
+    if (idleTime > 15) {
       const zoomTarget = (W() < 768 ? 12 : 10) + Math.sin(elapsed * 0.2) * 1.5;
-      camera.position.z += (zoomTarget - camera.position.z) * 0.02 * idleProgress;
+      camera.position.z += (zoomTarget - camera.position.z) * 0.02;
     } else {
       controlsTarget.x += (pointer.x * 1.5 - controlsTarget.x) * 0.05;
       controlsTarget.y += (pointer.y * 1.5 - controlsTarget.y) * 0.05;
-      mainGroup.rotation.y += (elapsed * 0.05 - mainGroup.rotation.y) * 0.05;
       camera.position.z += (defaultCameraPos.z - camera.position.z) * 0.05;
     }
   }
@@ -846,32 +848,28 @@ function animate() {
   });
 
 
+  // Update node positions (bob animation + spline endpoints)
   nodes.forEach(group => {
     group.position.y = group.userData.baseY + Math.sin(elapsed * group.userData.speed) * 0.2;
     const splineData = splines.find(s => s.group === group);
     if(splineData) {
       splineData.curve.v2.copy(group.position);
     }
+  });
+  
+  // Update text labels in WORLD SPACE — completely independent of group rotation
+  // This guarantees text always faces camera and is never mirrored/reversed
+  textLabels.forEach(({ textMesh, teaserMesh, group }) => {
+    // Get the node's actual world position (includes mainGroup rotation)
+    group.getWorldPosition(_worldPos);
     
-    // Compute camera's up direction in this group's local space
-    // so text always appears ABOVE the node from the viewer's perspective
-    _camUp.set(0, 1, 0).applyQuaternion(camera.quaternion);
-    group.getWorldQuaternion(_groupWorldQuat);
-    _invGroupQuat.copy(_groupWorldQuat).invert();
-    _localUp.copy(_camUp).applyQuaternion(_invGroupQuat).normalize();
+    // Position text above the node in world space
+    textMesh.position.set(_worldPos.x, _worldPos.y + 0.55, _worldPos.z);
+    teaserMesh.position.set(_worldPos.x, _worldPos.y + 0.95, _worldPos.z);
     
-    group.children.forEach(child => {
-      if (child.isText) {
-        // Billboard: always face the camera
-        child.quaternion.copy(camera.quaternion);
-        // Cancel out parent's world rotation so text faces camera cleanly
-        child.quaternion.premultiply(_invGroupQuat);
-        
-        // Position text along camera-up in local space
-        const offset = child.userData.textOffset || 0.55;
-        child.position.copy(_localUp).multiplyScalar(offset);
-      }
-    });
+    // Billboard: always face the camera (direct quaternion copy, no parent to worry about)
+    textMesh.quaternion.copy(camera.quaternion);
+    teaserMesh.quaternion.copy(camera.quaternion);
   });
   
   mainGroup.children.forEach(child => {
