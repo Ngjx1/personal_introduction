@@ -245,6 +245,20 @@ const PANELS = {
         </div>
       </div>
 
+      <div class="bento-card" style="--glow:rgba(124,111,240,0.35);">
+        <div class="bento-top">
+          <h3>Food Portion Analysis: Separating Overlapping Food Items on Plates Using Marker-Controlled Watershed</h3>
+          <span class="status-tag">Academic</span>
+        </div>
+        <p class="bento-desc">An advanced food portion analysis and semantic segmentation system designed to detect, classify, and separate touching or overlapping food items on a plate using Deep Learning models (DeepLabV3+, MAnet, UNet) combined with the Marker-Controlled Watershed algorithm.</p>
+        <div class="tech-row">
+          <span class="tech-badge"><span class="td" style="background:#FF6F00"></span>DeepLabV3+</span>
+          <span class="tech-badge"><span class="td" style="background:#009688"></span>MAnet / UNet</span>
+          <span class="tech-badge"><span class="td" style="background:#17B8A6"></span>Watershed Algorithm</span>
+          <span class="tech-badge"><span class="td" style="background:#7C6FF0"></span>Semantic Segmentation</span>
+        </div>
+      </div>
+
       <div class="bento-card" style="--glow:rgba(111,179,63,0.35);">
         <div class="bento-top">
           <h3>Systematic QQQ/TQQQ Trading Bot</h3>
